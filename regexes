@@ -1,0 +1,1 @@
+(?P<subject>.*)\s\[(?P<current_file>\d{1,4})\/(?P<total_files>\d{1,4})\]\s\-\s\"(?P<filename>.*)\"\syEnc\s\((?P<current_segment>\d{1,4})\/(?P<total_segments>\d{1,4})\)
