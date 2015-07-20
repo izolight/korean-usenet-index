@@ -10,7 +10,7 @@ s0 = nntplib.NNTP(host=auth[0]['server'],user=auth[0]['username'],password=auth[
 pattern = re.compile(r"(?P<subject>.+?) \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \- \"(?P<filename>.+?)\" yEnc \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
 pattern2 = re.compile(r"(?P<subject>.+?)  \"(?P<filename>.+?)\" \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
 
-n_headers = 100000
+n_headers = 5000
 resp, count ,first, last, name = s0.group('korea.binaries.tv')
 t0 = time()
 resp, overviews = s0.over((last-n_headers,last))
@@ -48,9 +48,14 @@ print('organized %s headers in %f seconds' % (n_headers,(t2-t1)))
 for s in subjects:
 	current_parts = len(subjects[s]['parts'])
 	total_parts = subjects[s]['total_parts']
+	subjects[s]['complete'] = False
 	if current_parts == total_parts:
+		subjects[s]['complete'] = True
 		for part in subjects[s]['parts']:
 			current_segments = len(subjects[s]['parts'][part]['segments'])
 			total_segments = subjects[s]['parts'][part]['total_segments']
-			if current_segments == total_segments:
-				print(subjects[s]['parts'][part]['name'])
+			if current_segments != total_segments:
+				subjects[s]['complete'] = False
+	print('%s %s' % (s,subjects[s]['complete']))
+	if subjects[s]['complete']:
+		print(s)
