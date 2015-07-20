@@ -7,10 +7,10 @@ encoding = 'utf-8'
 errors = 'ignore'
 
 s0 = nntplib.NNTP(host=auth[0]['server'],user=auth[0]['username'],password=auth[0]['password'])
-
 pattern = re.compile(r"(?P<subject>.+?) \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \- \"(?P<filename>.+?)\" yEnc \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
+pattern2 = re.compile(r"(?P<subject>.+?)  \"(?P<filename>.+?)\" \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
 
-n_headers = 50000
+n_headers = 100000
 resp, count ,first, last, name = s0.group('korea.binaries.tv')
 t0 = time()
 resp, overviews = s0.over((last-n_headers,last))
@@ -19,7 +19,18 @@ print('got %s headers in %f seconds' % (n_headers,(t1-t0)))
 subjects = {}
 
 for number, header in overviews:
-	subject, part_nr, total_parts, filename, segment_nr, total_segments = pattern.match(header['subject']).groups()
+	match = pattern.match(header['subject'])
+	if not match:
+		match = pattern2.match(header['subject'])
+		if not match:
+			print(header['subject'])
+			continue
+	subject = match.group('subject')
+	part_nr = int(match.group('part'))
+	total_parts = int(match.group('total_parts'))
+	filename = match.group('filename')
+	segment_nr = int(match.group('segment'))
+	total_segments = int(match.group('total_segments'))
 	segment = {'message-id':header['message-id'], 'bytes':header[':bytes']}
 	if subject in subjects:
 		if part_nr in subjects[subject]['parts']:
@@ -33,5 +44,13 @@ for number, header in overviews:
 t2 = time()
 print('organized %s headers in %f seconds' % (n_headers,(t2-t1)))
 
+
 for s in subjects:
-	print('%s: %s of %s parts' % (s,len(subjects[s]['parts']),subjects[s]['total_parts']))
+	current_parts = len(subjects[s]['parts'])
+	total_parts = subjects[s]['total_parts']
+	if current_parts == total_parts:
+		for part in subjects[s]['parts']:
+			current_segments = len(subjects[s]['parts'][part]['segments'])
+			total_segments = subjects[s]['parts'][part]['total_segments']
+			if current_segments == total_segments:
+				print(subjects[s]['parts'][part]['name'])
