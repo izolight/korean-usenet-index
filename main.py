@@ -57,5 +57,5 @@ for s in subjects:
 			if current_segments != total_segments:
 				subjects[s]['complete'] = False
 	print('%s %s' % (s,subjects[s]['complete']))
-	if subjects[s]['complete']:
-		print(s)
+#	if subjects[s]['complete']:
+#		print(s)
