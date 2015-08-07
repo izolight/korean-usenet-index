@@ -26,11 +26,14 @@ def get_articles_by_age(conn, days, group):
 	_,_,_,last,_ = conn.group(group)
 	position = last//2
 	width = position
+	prev_current = now
 	while delta > accuracy:
 		current = parse(conn.over((position,position))[1][0][1]['date'])
+		if prev_current == current:
+			break
 		delta = current - wishdate
 		d = now - current
-		logger.info('Positon: %d Age: %s days %s seconds' % (position, d.days, d.seconds))
+		logger.info('Positon: %d Age: %.2f days' % (position, d.days+d.seconds/86400))
 		width = width//2
 		if current > wishdate:
 			position = position - width			
@@ -38,6 +41,7 @@ def get_articles_by_age(conn, days, group):
 			position = position + width
 		if delta < timedelta(0):
 			delta = delta * -1
+		prev_current = current
 
 def main():
 	conn = init_connection()
