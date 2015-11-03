@@ -3,7 +3,8 @@ import nntplib, re
 from config import auth
 from time import time
 
-encoding = 'utf-8'
+fencoding = 'utf-8'
+tencoding = 'cp1252'
 errors = 'ignore'
 
 s0 = nntplib.NNTP(host=auth[0]['server'],user=auth[0]['username'],password=auth[0]['password'])
