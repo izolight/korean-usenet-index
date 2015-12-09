@@ -1,0 +1,14 @@
+##needed functions:##
+* get first and last article
+* get articlenumber by date
+* get latest x headers
+* group segments to binaries
+* group binaries to collections
+* clean collection name
+* categorize collection (tv, movies, mv, performance)
+* categorize by resolution, source
+* find metadata for collection
+* check for completion
+* list files
+* show mediainfo
+
