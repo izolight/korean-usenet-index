@@ -65,7 +65,7 @@ class TestUsenetMethods(unittest.TestCase):
         group = 'korea.binaries.tv'
         u = Usenet()
         u.set_group(group)
-        u.get_latest_headers(500)
+        u.get_latest_headers(1000)
         self.assertEqual(1,1)
         u.quit()
 
