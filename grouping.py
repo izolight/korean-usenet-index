@@ -7,7 +7,7 @@ fencoding = 'utf-8'
 tencoding = 'cp1252'
 errors = 'ignore'
 
-s0 = nntplib.NNTP(host=auth[0]['server'],user=auth[0]['username'],password=auth[0]['password'])
+s0 = nntplib.NNTP(host=auth[6]['server'],user=auth[6]['username'],password=auth[6]['password'])
 pattern = re.compile(r"(?P<subject>.+?) \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \- \"(?P<filename>.+?)\" yEnc \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
 pattern2 = re.compile(r"(?P<subject>.+?)  \"(?P<filename>.+?)\" \[(?P<part>\d{1,4})\/(?P<total_parts>\d{1,4})\] \((?P<segment>\d{1,4})\/(?P<total_segments>\d{1,4})")
 
