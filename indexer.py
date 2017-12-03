@@ -1,10 +1,11 @@
 #! /usr/bin/python3
 import nntplib
 from dateutil.parser import parse
+from config import auth
 
 class Indexer():
     def __init__(self):
-        self.connection = nntplib.NNTP_SSL(host='***REMOVED***',user='***REMOVED***',password='***REMOVED***')
+        self.connection = nntplib.NNTP_SSL(host=auth['server'],user=auth['user'],password=auth['password'])
 
     # For Setting the group and updating first/last
     def set_Group(self, groupname):

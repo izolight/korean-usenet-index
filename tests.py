@@ -3,12 +3,7 @@
 import unittest
 import nntplib
 import re
-
-config = {
-    'server': '***REMOVED***',
-    'user': '***REMOVED***',
-    'password': '***REMOVED***',
-}
+from config import auth
 
 class Usenet:
     
@@ -16,7 +11,7 @@ class Usenet:
         self.conn = self.connect()
 
     def connect(self):
-        conn = nntplib.NNTP_SSL(host=config['server'], user=config['user'], password=config['password'])
+        conn = nntplib.NNTP_SSL(host=auth['server'], user=auth['user'], password=auth['password'])
         return conn
     
     def quit(self):
